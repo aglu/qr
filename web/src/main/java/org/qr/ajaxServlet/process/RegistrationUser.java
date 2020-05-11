@@ -16,7 +16,7 @@ import org.qr.ajaxServlet.UserRegistrationData;
 public class RegistrationUser {
 
 
-    public static void execute(String sessionId, Map<String, Object> request, Object jsonData) throws ApiException, EmptyParamsException, NotFoundDataExceptions, InterruptedException {
+    public static void execute(String sessionId, Map<String, Object> request, Object jsonData) throws ApiException {
         UserRegistrationData regData = new UserRegistrationData();
         regData.writeFromData(request);
         try (Session session = MainPool.getPool()) {
@@ -37,9 +37,7 @@ public class RegistrationUser {
             userAttributes.add(new TUserAttributes().setUserId(newUser.getId())
                     .setAttrName(4l)
                     .setAttrValue(regData.getDocNumber()));
-            userAttributes.stream().forEach(el -> {
-                session.save(el);
-            });
+            userAttributes.forEach(session::save);
             session.getTransaction().commit();
         }
     }

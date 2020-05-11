@@ -50,4 +50,9 @@ public class TUserAttributes {
     @Getter
     private TUsers user;
 
+    @ManyToOne
+    @JoinColumn(name = "attr_name", insertable = false, updatable = false)
+    @Getter
+    private TDicUserAttributes dicAttributes;
+
 }

@@ -7,7 +7,7 @@ import org.qr.ajaxServlet.ApiException;
 
 public interface AjaxProcess {
 
-    public static void execute(HttpSession session, HttpServletRequest request, Object jsonData) throws ApiException {
+    static void execute(HttpSession session, HttpServletRequest request, Object jsonData) {
 
     }
 }

@@ -7,4 +7,8 @@
         <servlet-name>QRweb</servlet-name>
         <servlet-class>org.qr.ajaxServlet.HttpServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QRdocument</servlet-name>
+        <servlet-class>org.qr.documentServlet.HttpServlet</servlet-class>
+    </servlet>
 </web-app>

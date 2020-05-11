@@ -2,8 +2,6 @@ package org.qr.ajaxServlet;
 
 import java.util.Map;
 
-import org.qr.ajaxServlet.process.RegistrationUser;
-
 
 import lombok.Data;
 

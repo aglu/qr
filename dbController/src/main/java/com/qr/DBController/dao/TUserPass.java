@@ -1,13 +1,18 @@
 package com.qr.DBController.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.qr.DBController.exceptions.EmptyParamsException;
+import com.qr.DBController.exceptions.NotFoundDataExceptions;
+import org.hibernate.Session;
 import org.hibernate.search.annotations.Indexed;
 
 
@@ -24,6 +29,7 @@ public class TUserPass {
     @Id
     @Column(name = "id")
     @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "pass_type_id")
@@ -56,5 +62,15 @@ public class TUserPass {
     @Getter
     private TDicPassType passType;
 
+    public static TUserPass getById(Session session, Long id) throws EmptyParamsException, NotFoundDataExceptions {
+        if (id == null) {
+            throw new EmptyParamsException("id");
+        }
+        TUserPass userPass = session.get(TUserPass.class, id);
+        if (userPass == null) {
+            throw new NotFoundDataExceptions("TUserPass");
+        }
+        return userPass;
+    }
 
 }

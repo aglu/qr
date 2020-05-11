@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.qr.ajaxServlet.process.AuthorizeUser;
 import org.qr.ajaxServlet.process.CheckSession;
+import org.qr.ajaxServlet.process.CreatePass;
 import org.qr.ajaxServlet.process.RegistrationUser;
+import org.qr.ajaxServlet.process.RequestAuthorizationCode;
+import org.qr.ajaxServlet.process.ShowPassData;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +37,11 @@ public class AjaxRouter {
         String sessionId = session.getId();
         boolean isSuccess = true;
         String error = null;
-        String jsonData = null;
+        Map<String, Object> jsonData = new HashMap<>();
         try {
             String inputData = getStreamData(request);
 
-            if (inputData.equals(String.valueOf(""))) {
+            if (inputData.equals("")) {
                 throw EMPTY_ACTION_EXCEPTION;
             }
             ObjectMapper objectMapper = new ObjectMapper();
@@ -47,16 +51,13 @@ public class AjaxRouter {
                 throw EMPTY_ACTION_EXCEPTION;
             }
             switch (action) {
-                case "check_session":
-                    CheckSession.execute(sessionId, map, jsonData);
-                    break;
-                case "authorize_user":
-                    AuthorizeUser.execute(sessionId, map, jsonData);
-                    break;
-                case "registration_user":
-                    RegistrationUser.execute(sessionId, map, jsonData);
-                    break;
-                default: throw EMPTY_ACTION_EXCEPTION;
+                case "check_session" -> CheckSession.execute(sessionId, map, jsonData);
+                case "authorize_user" -> AuthorizeUser.execute(sessionId, map, jsonData);
+                case "registration_user" -> RegistrationUser.execute(sessionId, map, jsonData);
+                case "request_code" -> RequestAuthorizationCode.execute(sessionId, map, jsonData);
+                case "create_pass" -> CreatePass.execute(sessionId, map, jsonData);
+                case "data_pass" -> ShowPassData.execute(sessionId, map, jsonData);
+                default -> throw EMPTY_ACTION_EXCEPTION;
             }
         } catch (ApiException e) {
             isSuccess = false;

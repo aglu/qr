@@ -4,8 +4,8 @@ import org.hibernate.Session;
 
 public interface Pool {
 
-    public void initialize();
+    void initialize();
 
-    public Session getPool();
+    Session getPool();
 
 }

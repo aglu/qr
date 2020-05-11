@@ -26,7 +26,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
 
 
 
-    private void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding(CHARSET.name());
             response.setStatus(SUCCESS_RESPONCE);

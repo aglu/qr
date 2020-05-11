@@ -6,12 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Indexed;
 
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -52,5 +55,8 @@ public class TDicUserAttributes {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+
 
 }

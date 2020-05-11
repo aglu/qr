@@ -21,7 +21,7 @@ public class UserSessionHelper {
 
     public static TUsers checkSessionWithProlong(String sessionId) throws ApiException, EmptyParamsException, InterruptedException {
         try (Session session = MainPool.getPool()) {
-            List<TUserSessions> sessions = new ArrayList<>();
+            List<TUserSessions> sessions;
             try {
                 sessions = TUserSessions.getBySessionKey(session, sessionId);
             } catch (NotFoundDataExceptions e) {
@@ -35,19 +35,19 @@ public class UserSessionHelper {
                 session.getTransaction().commit();
                 throw new ApiException("Сессия пользователя истекла. Необходима авторизация");
             }
-            userSession.setSessionDate(java.sql.Date.valueOf(String.valueOf(currentDate)));
+            userSession.setSessionDate(currentDate);
             return userSession.getUser();
         }
     }
 
-    public static void authorizeUser(String phone, String code, String sessionId) throws ApiException, EmptyParamsException, InterruptedException, NotFoundDataExceptions {
+    public static void authorizeUser(String phone, String code, String sessionId) throws ApiException, EmptyParamsException, InterruptedException {
         try (Session session = MainPool.getPool()) {
-            List<TUsers> users = new ArrayList<>();
+            List<TUsers> users;
             users = TUsers.getByPhone(session, phone);
             if (users.isEmpty() || users.size() > 1) {
                 throw new ApiException("Пользователь не найден");
             }
-            if (!users.get(0).getKeys().stream().anyMatch(el -> el.getKey().equals(code))) {
+            if (users.get(0).getKeys().stream().noneMatch(el -> el.getKey().equals(code))) {
                 throw new ApiException("Неверный ключ авторизации");
             }
             session.beginTransaction();
