@@ -20,6 +20,7 @@ import org.qr.ajaxServlet.process.CreatePass;
 import org.qr.ajaxServlet.process.RegistrationUser;
 import org.qr.ajaxServlet.process.RequestAuthorizationCode;
 import org.qr.ajaxServlet.process.ShowPassData;
+import org.qr.ajaxServlet.process.UserProfile;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,8 @@ public class AjaxRouter {
                 throw EMPTY_ACTION_EXCEPTION;
             }
             ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> map = objectMapper.readValue(inputData, new TypeReference<Map<String,Object>>(){});
+            Map<String, Object> map = objectMapper.readValue(inputData, new TypeReference<Map<String, Object>>() {
+            });
             String action = (String) map.get(ROUTE_ATTRIBUTE);
             if (action == null) {
                 throw EMPTY_ACTION_EXCEPTION;
@@ -57,6 +59,7 @@ public class AjaxRouter {
                 case "request_code" -> RequestAuthorizationCode.execute(sessionId, map, jsonData);
                 case "create_pass" -> CreatePass.execute(sessionId, map, jsonData);
                 case "data_pass" -> ShowPassData.execute(sessionId, map, jsonData);
+                case "user_data" -> UserProfile.execute(sessionId, map, jsonData);
                 default -> throw EMPTY_ACTION_EXCEPTION;
             }
         } catch (ApiException e) {
@@ -97,7 +100,7 @@ public class AjaxRouter {
             if (read < 0)
                 break;
             output.write(temp, 0, read);
-            total+= read;
+            total += read;
         }
         return total;
     }

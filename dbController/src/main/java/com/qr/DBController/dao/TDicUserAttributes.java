@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Indexed;
@@ -21,42 +19,20 @@ import lombok.Getter;
 @Table(name = "t_dic_user_attributes", schema = "public", catalog = "qr")
 @Indexed
 public class TDicUserAttributes {
-    private long id;
-    private String value;
-    private String description;
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    @Getter
+    private long id;
 
     @Basic
     @Column(name = "value")
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+    @Getter
+    private String value;
 
     @Basic
     @Column(name = "description")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-
+    @Getter
+    private String description;
 
 }

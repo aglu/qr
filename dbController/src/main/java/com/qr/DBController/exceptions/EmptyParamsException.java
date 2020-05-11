@@ -1,13 +1,12 @@
-package com.qr.DBController.exceptions;
+package com.qr.dbcontroller.exceptions;
 
 public class EmptyParamsException extends Exception {
 
+    private static final String PREFIX_MESSAGE = "Не заполнен обязательный параметр ";
     protected String context;
 
-    private static final String PREFIX_MESSAGE = "Не заполнен обязательный параметр ";
-
     public EmptyParamsException(String message) {
-        this(PREFIX_MESSAGE + message, (Throwable) null);
+        this(PREFIX_MESSAGE + message, null);
     }
 
     public EmptyParamsException(String message, Object context) {

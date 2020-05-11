@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import java.util.List;
 import javax.persistence.Column;
@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.qr.DBController.exceptions.EmptyParamsException;
+import com.qr.dbcontroller.util.MiscUtil;
+import com.qr.dbcontroller.exceptions.EmptyParamsException;
+import com.qr.dbcontroller.exceptions.NotFoundDataExceptions;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Analyze;
@@ -41,7 +43,7 @@ public class TUsers {
     @Column(name = "phone")
     @Getter
     @Setter
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO,  termVector = TermVector.YES)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, termVector = TermVector.YES)
     private String phone;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
@@ -68,21 +70,24 @@ public class TUsers {
         if (id == null) {
             return null;
         }
-        return session.get(TUsers.class, (long) id);
+        return session.get(TUsers.class, id);
     }
 
-    public static List<TUsers> getByPhone(Session session, String phone) throws EmptyParamsException, InterruptedException {
+    public static List<TUsers> getByPhone(Session session, String phone) throws EmptyParamsException, InterruptedException, NotFoundDataExceptions {
         if (phone == null) {
             throw new EmptyParamsException("phone");
         }
-
         FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
         fullTextSession.createIndexer().startAndWait();
         QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder()
                 .forEntity(TUsers.class).get();
         org.apache.lucene.search.Query query = qb.keyword().onField("phone")
                 .matching(phone).createQuery();
-        return fullTextSession.createFullTextQuery(query).list();
+        List<TUsers> users = fullTextSession.createFullTextQuery(query).list();
+        if (MiscUtil.isEmpty(users)) {
+            throw new NotFoundDataExceptions("TUsers");
+        }
+        return users;
     }
 
 }

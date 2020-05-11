@@ -1,8 +1,0 @@
-org\qr\ajaxServlet\JsonResponce.class
-org\qr\ajaxServlet\process\NoActioin.class
-org\qr\ajaxServlet\ApiException.class
-org\qr\ajaxServlet\process\CheckSession.class
-org\qr\ajaxServlet\HttpServlet.class
-org\qr\ajaxServlet\process\AjaxProcess.class
-org\qr\ajaxServlet\AjaxRouter$1.class
-org\qr\ajaxServlet\AjaxRouter.class

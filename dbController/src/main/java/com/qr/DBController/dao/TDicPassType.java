@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

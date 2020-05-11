@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import java.util.List;
 import javax.persistence.Column;
@@ -10,9 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.qr.DBController.Util.MiscUtil;
-import com.qr.DBController.exceptions.EmptyParamsException;
-import com.qr.DBController.exceptions.NotFoundDataExceptions;
+import com.qr.dbcontroller.util.MiscUtil;
+import com.qr.dbcontroller.exceptions.EmptyParamsException;
+import com.qr.dbcontroller.exceptions.NotFoundDataExceptions;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Analyze;

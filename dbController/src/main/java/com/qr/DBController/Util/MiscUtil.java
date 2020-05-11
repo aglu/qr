@@ -1,4 +1,4 @@
-package com.qr.DBController.Util;
+package com.qr.dbcontroller.util;
 
 import java.util.Collection;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Indexed;
 
 
@@ -48,11 +49,13 @@ public class TUserAttributes {
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @Getter
+    @JsonIgnore
     private TUsers user;
 
     @ManyToOne
     @JoinColumn(name = "attr_name", insertable = false, updatable = false)
     @Getter
+    @JsonIgnore
     private TDicUserAttributes dicAttributes;
 
 }

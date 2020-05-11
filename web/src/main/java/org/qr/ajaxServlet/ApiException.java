@@ -6,11 +6,7 @@ public class ApiException extends Exception {
     protected String context;
 
     public ApiException(String message) {
-        this(message, (Throwable) null);
-    }
-
-    public ApiException(String message, Boolean isDeleteSession) {
-        this(message, (Throwable) null);
+        this(message, null);
     }
 
     public ApiException(String message, Object context) {

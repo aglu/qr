@@ -1,4 +1,4 @@
-package com.qr.DBController.exceptions;
+package com.qr.dbcontroller.exceptions;
 
 public class NotFoundDataExceptions extends Exception {
 
@@ -7,7 +7,7 @@ public class NotFoundDataExceptions extends Exception {
     protected String context;
 
     public NotFoundDataExceptions(String message) {
-        this(PREFIX_MESSAGE + message, (Throwable) null);
+        this(PREFIX_MESSAGE + message, null);
     }
 
     public NotFoundDataExceptions(String message, Object context) {

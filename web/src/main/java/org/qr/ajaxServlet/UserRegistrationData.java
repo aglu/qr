@@ -1,12 +1,15 @@
 package org.qr.ajaxServlet;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 import lombok.Data;
 
 @Data
 public class UserRegistrationData {
+
+    private static final String PHONE_PATTERN = "^[9]\\d{9}$";
 
     private String firstName;
     private String lastName;
@@ -16,7 +19,7 @@ public class UserRegistrationData {
 
     public void writeFromData(Map<String, Object> request) throws ApiException {
         String phone = String.valueOf(request.get("phone"));
-        if (phone.equals("null") || phone.length() != 10 || phone.startsWith("9")) {
+        if (phone.equals("null") || phone.length() != 10 || !Pattern.matches(PHONE_PATTERN,phone)) {
             throw new ApiException("Номер телефона не указан или указан неверно");
         }
         String firstName = String.valueOf(request.get("firstName"));

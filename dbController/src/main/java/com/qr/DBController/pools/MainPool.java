@@ -1,4 +1,4 @@
-package com.qr.DBController.pools;
+package com.qr.dbcontroller.pools;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,9 +6,8 @@ import org.hibernate.cfg.Configuration;
 
 public class MainPool {
 
-    private static SessionFactory ourSessionFactory;
     private static final Object MONITOR = new Object();
-
+    private static SessionFactory ourSessionFactory;
 
     public static void initialize() {
         Configuration configuration = new Configuration();

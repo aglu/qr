@@ -1,4 +1,4 @@
-package com.qr.DBController.dao;
+package com.qr.dbcontroller.dao;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -10,8 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.qr.DBController.exceptions.EmptyParamsException;
-import com.qr.DBController.exceptions.NotFoundDataExceptions;
+import com.qr.dbcontroller.exceptions.EmptyParamsException;
+import com.qr.dbcontroller.exceptions.NotFoundDataExceptions;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.Session;
 import org.hibernate.search.annotations.Indexed;
 
@@ -55,11 +56,13 @@ public class TUserPass {
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @Getter
+    @JsonIgnore
     private TUsers user;
 
     @ManyToOne
     @JoinColumn(name = "pass_type_id", insertable = false, updatable = false)
     @Getter
+    @JsonIgnore
     private TDicPassType passType;
 
     public static TUserPass getById(Session session, Long id) throws EmptyParamsException, NotFoundDataExceptions {

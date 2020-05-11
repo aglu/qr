@@ -7,19 +7,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import com.mchange.v2.cfg.PropertiesConfigSource;
-import com.qr.DBController.dao.TUserPass;
-import com.qr.DBController.dao.TUserSessions;
-import com.qr.DBController.dao.TUsers;
-import com.qr.DBController.exceptions.EmptyParamsException;
-import com.qr.DBController.exceptions.NotFoundDataExceptions;
-import com.qr.DBController.pools.MainPool;
+import com.qr.dbcontroller.dao.TUserPass;
+import com.qr.dbcontroller.dao.TUserSessions;
+import com.qr.dbcontroller.dao.TUsers;
+import com.qr.dbcontroller.exceptions.EmptyParamsException;
+import com.qr.dbcontroller.exceptions.NotFoundDataExceptions;
+import com.qr.dbcontroller.pools.MainPool;
 import org.hibernate.Session;
 import org.qr.ajaxServlet.ApiException;
 
 public class CreatePass {
 
-    public static void execute(String sessionId, Map<String, Object> request, Map<String, Object> jsonData) throws ApiException, EmptyParamsException, InterruptedException, NotFoundDataExceptions {
+    public static void execute(String sessionId, Map<String, Object> request, Map<String, Object> jsonData) throws ApiException, EmptyParamsException, InterruptedException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
         Date datePass;
         try {
@@ -30,9 +29,9 @@ public class CreatePass {
         if (datePass.getTime() < new Date().getTime()) {
             throw new ApiException("Дата не может быть в прошлом");
         }
-        Long passType;
+        long passType;
         try {
-            passType = Long.valueOf(String.valueOf(request.get("passType")));
+            passType = Long.parseLong(String.valueOf(request.get("passType")));
         } catch (NumberFormatException e) {
             throw new ApiException("Не верно указан тип пропуска");
         }
