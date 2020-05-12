@@ -17,6 +17,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.qr.ajaxServlet.process.AuthorizeUser;
 import org.qr.ajaxServlet.process.CheckSession;
 import org.qr.ajaxServlet.process.CreatePass;
+import org.qr.ajaxServlet.process.LogoutUser;
 import org.qr.ajaxServlet.process.RegistrationUser;
 import org.qr.ajaxServlet.process.RequestAuthorizationCode;
 import org.qr.ajaxServlet.process.ShowPassData;
@@ -60,6 +61,7 @@ public class AjaxRouter {
                 case "create_pass" -> CreatePass.execute(sessionId, map, jsonData);
                 case "data_pass" -> ShowPassData.execute(sessionId, map, jsonData);
                 case "user_data" -> UserProfile.execute(sessionId, map, jsonData);
+                case "logout" -> LogoutUser.execute(sessionId, map, jsonData);
                 default -> throw EMPTY_ACTION_EXCEPTION;
             }
         } catch (ApiException e) {

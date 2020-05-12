@@ -3,6 +3,7 @@ package org.qr.ajaxServlet.process;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.qr.dbcontroller.dao.TDicPassType;
 import com.qr.dbcontroller.dao.TUserPass;
 import com.qr.dbcontroller.dao.TUserSessions;
 import com.qr.dbcontroller.dao.TUsers;
@@ -12,7 +13,7 @@ import org.qr.ajaxServlet.ApiException;
 
 public class UserProfile {
 
-    public static void execute(String sessionId, Map<String, Object> request, Map<String, Object> jsonData) throws ApiException {
+    public static void execute(String sessionId, Map<String, Object> request, Map<String, Object> jsonData) throws ApiException, InterruptedException {
         try (Session session = MainPool.getPool()) {
             TUsers user;
             try {
@@ -25,6 +26,7 @@ public class UserProfile {
             jsonData.put("userAttributes", map);
             Object[] arr = user.getUserPasses().stream().sorted((TUserPass el1, TUserPass el2) -> el2.getStartDate().compareTo(el1.getStartDate())).toArray();
             jsonData.put("pass", arr);
+            jsonData.put("passType", TDicPassType.getDicPassType(session));
         }
     }
 }

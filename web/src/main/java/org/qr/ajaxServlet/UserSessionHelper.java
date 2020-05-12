@@ -41,6 +41,21 @@ public class UserSessionHelper {
         }
     }
 
+    public static void logoutUser(String sessionId) throws EmptyParamsException, InterruptedException {
+        try (Session session = MainPool.getPool()) {
+            List<TUserSessions> sessions;
+            try {
+                sessions = TUserSessions.getBySessionKey(session, sessionId);
+            } catch (NotFoundDataExceptions e) {
+                return;
+            }
+            TUserSessions userSession = sessions.get(0);
+            session.beginTransaction();
+            session.delete(userSession);
+            session.getTransaction().commit();
+        }
+    }
+
     public static void authorizeUser(String phone, String code, String sessionId) throws ApiException, EmptyParamsException, InterruptedException {
         try (Session session = MainPool.getPool()) {
             List<TUsers> users;
